@@ -1,0 +1,53 @@
+# 編譯生成的二進制文件
+bin/
+build/
+dist/
+
+# Go 模塊緩存
+go.sum
+vendor/
+
+# 臨時文件和緩存
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.o
+*.a
+*.obj
+*.pdb
+*.log
+*.pid
+*.prof
+*.cov
+
+# 編輯器和 IDE 相關文件
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# 系統生成的文件
+.DS_Store
+Thumbs.db
+
+# 測試覆蓋率和臨時文件
+coverage.txt
+profile.out
+tmp/
+
+# 環境變量文件（視項目而定）
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Go 特定的工具生成文件
+*.coverprofile
+*.modc
+*.swp
+*.swo
