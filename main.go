@@ -24,5 +24,12 @@ func main() {
 	r.GET("/assets/*filepath", func(c *gee.Context) {
 		c.JSON(http.StatusOK, gee.H{"filepath": c.Param("filepath")})
 	})
+	v1 := r.Group("////v1")
+	v1_1 := v1.Group("v1_1")
+	v1_1_1 := v1_1.Group("v1_1_1")
+	v1_1_1.GET("/user/:id", func(c *gee.Context) {
+		id := c.Param("id")
+		c.JSON(200, id)
+	})
 	log.Fatal(r.Run(":7799"))
 }
