@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	r := gee.New()
+	r := gee.Default()
 	r.GET("/", func(c *gee.Context) {
 		c.JSON(200, gee.H{
 			"msg": "nb666",
@@ -30,6 +30,10 @@ func main() {
 	v1_1_1.GET("/user/:id", func(c *gee.Context) {
 		id := c.Param("id")
 		c.JSON(200, id)
+	})
+	r.GET("/panic", func(c *gee.Context) {
+		a := "qwrer"
+		c.String(200, "%s", a[100])
 	})
 	log.Fatal(r.Run(":7799"))
 }

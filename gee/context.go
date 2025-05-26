@@ -18,6 +18,9 @@ type Context struct {
 	Params map[string]string
 	// response info
 	StatusCode int
+	// middleware
+	handlers []HandlerFunc
+	index    int
 }
 
 func newContext(w http.ResponseWriter, r *http.Request) *Context {
@@ -26,6 +29,15 @@ func newContext(w http.ResponseWriter, r *http.Request) *Context {
 		Req:    r,
 		Path:   r.URL.Path,
 		Method: r.Method,
+		index:  -1,
+	}
+}
+
+func (c *Context) Next() {
+	c.index++
+	s := len(c.handlers)
+	for ; c.index < s; c.index++ {
+		c.handlers[c.index](c)
 	}
 }
 
@@ -55,6 +67,12 @@ func (c *Context) SetHeader(key, value string) {
 
 // String Respond to the request as a string
 func (c *Context) String(code int, format string, values ...interface{}) {
+	c.SetHeader("Content-Type", "text/plain")
+	c.Status(code)
+	c.Writer.Write([]byte(fmt.Sprintf(format, values...)))
+}
+
+func (c *Context) Fail(code int, format string, values ...interface{}) {
 	c.SetHeader("Content-Type", "text/plain")
 	c.Status(code)
 	c.Writer.Write([]byte(fmt.Sprintf(format, values...)))
